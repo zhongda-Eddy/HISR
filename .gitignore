@@ -31,3 +31,10 @@ coverage/
 .DS_Store
 Thumbs.db
 
+# Build caches and local tooling
+*.tsbuildinfo
+.npm-cache/
+work/
+test-results/
+playwright-report/
+

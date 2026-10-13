@@ -1,77 +1,88 @@
-# HISR MVP Spec v0.1
+# HISR MVP Specification v0.2
 
-## 产品定位
+## Product definition
 
-HISR 面向对现实处境、为人处世或未来选择感到迷茫的人。用户通过描述问题，获得来自历史案例、哲学思想和文学作品的多角度参照，从而形成自己的判断。
+HISR helps people who feel uncertain about relationships, work, growth, values, or future decisions. By connecting historical cases, philosophical ideas, and literary works, it gives users context and inspiration to form their own judgment.
 
-> 历史提供参照，哲学提供解释，文学提供共鸣。
+History offers context. Philosophy opens a lens. Literature makes it human.
 
-## 核心原则
+## Principles
 
-- 文史哲不分家。
-- 帮助用户看见更多可能性，不替用户作决定。
-- 明确区分事实、解释与推测。
-- 历史案例和文学作品应提供基本出处，不伪造引用。
-- 不替代医疗、法律、金融或心理危机服务。
+- Treat history, philosophy, and literature as connected ways of understanding a human question.
+- Support the user's agency rather than decide for them.
+- Distinguish factual source summaries from interpretations and uncertain parallels.
+- Link every reference to a source; never invent quotations or citations.
+- Explain differences as well as similarities.
+- Do not replace professional medical, legal, financial, or crisis services.
 
-## 核心用户流程
+## User flow
 
-1. 用户描述现实困惑。
-2. 用户选择问题类型：关系、工作、学习、人生选择、价值观冲突或其他。
-3. 系统提炼事件背景、核心冲突、情绪和用户重视的价值。
-4. 系统提供历史参照、哲学视角和文学映照。
-5. 系统比较两到三个可能方向及其收益与代价。
-6. 系统提出值得继续思考的问题，允许用户追问。
+1. Describe a situation in 12–4,000 characters.
+2. Optionally choose General, Relationships, Career, Growth, Meaning, or Values.
+3. Receive a careful restatement and a useful tension to explore.
+4. Read one historical, one philosophical, and one literary perspective.
+5. Compare two or three possible directions and their benefits and costs.
+6. Consider reflection questions and one small next step.
+7. Add context or ask a follow-up; save the conversation if desired.
 
-## 回答结构
+## Reflection format
 
-1. 我理解到的处境
-2. 历史中的相似处境
-3. 哲学视角
-4. 文学中的映照
-5. 相似点与不同点
-6. 可能方向、收益与代价
-7. 继续思考的问题
+- Title
+- Understanding of the situation
+- Core tension
+- Three perspectives: source, connection, and difference
+- Possible directions and tradeoffs
+- Reflection questions
+- One small next step
 
-## MVP 必须完成
+Factual summaries, authors, source links, and citations come from the reviewed starter collection. The model supplies interpretations, not new factual sources.
 
-- 用户输入问题并选择类型
-- 调用 LLM API
-- 返回并展示结构化回答
-- 覆盖历史、哲学、文学三个维度
-- 显示免责声明与安全提示
-- 保存最近咨询记录
-- 支持继续追问
+## MVP scope
 
-## 首版暂不完成
+- English interface, documentation, starter sources, and AI responses
+- Responsive reflection room, library, saved reflections, and product explanation
+- Next.js API route with validated input and structured output
+- OpenAI Responses API with a server-only key
+- Clearly labeled local preview when no API key is configured
+- Category/keyword retrieval from nine reviewed starter entries
+- Follow-up context with a limit of eight turns per session
+- Optional browser-local storage of up to twelve sessions
+- Source links and explicit analogy limits
+- Initial urgent-danger handling and service error messages
 
-- 复杂账号与权限系统
-- 社交功能
-- 自动抓取互联网内容
-- 完整向量数据库和复杂推荐系统
-- 移动端原生应用
-- Docker 部署
+## Implementation decisions
 
-## 建议页面
+- Next.js App Router, React, TypeScript, and custom CSS
+- Curated content in `content/sources.json`, editable without changing the interface
+- LocalStorage for the first version: no accounts or server database yet
+- API key configured in ignored `.env.local`
+- Structured response validation and source-ID enforcement
+- No automatic public deployment or remote Git push
 
-- 首页：品牌介绍、问题输入、问题类型、最近咨询
-- 结果页：结构化分析、文史哲卡片、方向比较、追问入口
-- 历史记录页：问题标题、时间、问题与回答
+These choices keep the first consultation loop small. Browser-local records are a deliberate change from the earlier SQLite/local-JSON suggestion: they avoid server-side retention and enable optional saving without accounts.
 
-## 建议技术路线
+## Out of scope
 
-- 前端：Next.js、React、TypeScript、Tailwind CSS
-- 后端首版：Next.js API Routes
-- 数据首版：SQLite 或本地 JSON
-- 知识内容：人工整理历史案例、哲学概念和文学作品
-- 后续：embeddings + vector database + RAG
+- Complex accounts and permissions
+- Social features
+- Live web crawling
+- Embeddings, vector database, or large-scale retrieval
+- Native mobile applications
+- Docker and public production deployment
 
-## MVP 验收标准
+## Acceptance criteria
 
-- 用户能在一分钟内提交问题。
-- 回答包含历史、哲学、文学三个维度。
-- 至少提供两个不同方向及其代价。
-- 不直接替用户作决定。
-- 关键引用具有基本出处。
-- 桌面浏览器可以正常完成一次完整咨询。
+- A user can submit a question within a minute.
+- A reflection contains all three disciplines and at least two directions.
+- Each reference has a verifiable link and a limit to its analogy.
+- The user can continue, explicitly save, reopen, and remove a reflection.
+- Preview templates are clearly distinguished from personalized AI output.
+- The app works at desktop and mobile widths with keyboard-accessible controls.
+- Invalid input and provider failures produce readable errors.
+- No API key appears in client code or tracked files.
 
+## Known limits and next work
+
+The source library is deliberately small and its matches are sometimes broad. Neither source-ID validation nor structured output guarantees that every generated interpretation is correct. Preview mode cannot understand a unique situation beyond its template and topic selection.
+
+Before a public launch, add authentication, usage budgets and rate limits, more comprehensive crisis detection, editorial review/evaluation, and privacy controls appropriate to the deployment. Then expand the source collection and consider embeddings-based RAG.
